@@ -1,7 +1,16 @@
+using System.Collections;
 using UnityEngine;
 
 public class HammerDragWorld : MonoBehaviour
 {
+    [Header("Sprites")]
+    [SerializeField] private Sprite normalHammerSprite;
+    [SerializeField] private Sprite heldHammerSprite;
+
+    [Header("Highlight")]
+    [SerializeField] private Color normalColor = Color.white;
+    [SerializeField] private Color highlightColor = Color.yellow;
+
     [Header("Target")]
     [SerializeField] private GameObject targetSprite;
     [SerializeField] private GameObject crackPrefab;
@@ -14,19 +23,45 @@ public class HammerDragWorld : MonoBehaviour
     [SerializeField] private LayerMask playerLayer;
     [SerializeField] private float hitRadius = 0.5f;
 
-    private Camera mainCamera;
-    private bool isDragging = false;
-    private Vector3 targetPosition;
+    [Header("Allowed Strike Area")]
+    [SerializeField] private Collider2D allowedStrikeArea;
 
+    [Header("Strike Animation")]
+    [SerializeField] private float strikeAngle = -70f;
+    [SerializeField] private float strikeTime = 0.15f;
+    [SerializeField] private float returnTime = 0.25f;
+    [SerializeField] private float pauseAfterStrike = 0.15f;
+
+    private Camera mainCamera;
+    private SpriteRenderer spriteRenderer;
     private Collider2D hammerCollider;
     private Rigidbody2D rb;
+
+    private bool isDragging = false;
+    private bool isAnimating = false;
+    private bool isHovering = false;
+
+    private Vector3 targetPosition;
+
+    private Vector3 startPosition;
+    private Quaternion startRotation;
 
     private void Awake()
     {
         mainCamera = Camera.main;
 
+        spriteRenderer = GetComponent<SpriteRenderer>();
         hammerCollider = GetComponent<Collider2D>();
         rb = GetComponent<Rigidbody2D>();
+
+        startPosition = transform.position;
+        startRotation = transform.rotation;
+
+        if (spriteRenderer != null && normalHammerSprite != null)
+            spriteRenderer.sprite = normalHammerSprite;
+
+        if (spriteRenderer != null)
+            spriteRenderer.color = normalColor;
 
         if (targetSprite != null)
             targetSprite.SetActive(false);
@@ -34,6 +69,11 @@ public class HammerDragWorld : MonoBehaviour
 
     private void Update()
     {
+        if (isAnimating)
+            return;
+
+        CheckHover();
+
         if (Input.GetMouseButtonDown(0))
         {
             TryPickUpHammer();
@@ -50,17 +90,50 @@ public class HammerDragWorld : MonoBehaviour
         }
     }
 
+    private void CheckHover()
+    {
+        if (isDragging)
+            return;
+
+        Vector3 mouseWorldPos = GetMouseWorldPosition();
+        Collider2D hit = Physics2D.OverlapPoint(mouseWorldPos);
+
+        bool mouseIsOverHammer = hit != null && hit.gameObject == gameObject;
+
+        if (mouseIsOverHammer && !isHovering)
+        {
+            isHovering = true;
+
+            if (spriteRenderer != null)
+                spriteRenderer.color = highlightColor;
+        }
+        else if (!mouseIsOverHammer && isHovering)
+        {
+            isHovering = false;
+
+            if (spriteRenderer != null)
+                spriteRenderer.color = normalColor;
+        }
+    }
+
     private void TryPickUpHammer()
     {
         Vector3 mouseWorldPos = GetMouseWorldPosition();
-
         Collider2D hit = Physics2D.OverlapPoint(mouseWorldPos);
 
         if (hit != null && hit.gameObject == gameObject)
         {
             isDragging = true;
+            isHovering = false;
 
-            // Stop hammer from pushing player while dragging
+            if (spriteRenderer != null)
+            {
+                spriteRenderer.color = normalColor;
+
+                if (heldHammerSprite != null)
+                    spriteRenderer.sprite = heldHammerSprite;
+            }
+
             if (hammerCollider != null)
                 hammerCollider.enabled = false;
 
@@ -81,10 +154,8 @@ public class HammerDragWorld : MonoBehaviour
     {
         Vector3 mouseWorldPos = GetMouseWorldPosition();
 
-        // Hammer follows the mouse
         transform.position = mouseWorldPos;
 
-        // Target is separate from the hammer
         targetPosition = mouseWorldPos + targetOffset;
 
         if (targetSprite != null)
@@ -100,18 +171,138 @@ public class HammerDragWorld : MonoBehaviour
         if (targetSprite != null)
             targetSprite.SetActive(false);
 
+        if (!CanStrikeAtTarget())
+        {
+            Debug.Log("Cannot strike here. Target is outside allowed area.");
+            StartCoroutine(ReturnHammerWithoutStrike());
+            return;
+        }
+
+        StartCoroutine(StrikeAnimation());
+    }
+    private bool CanStrikeAtTarget()
+    {
+        if (allowedStrikeArea == null)
+        {
+            Debug.LogWarning("No allowed strike area assigned.");
+            return true;
+        }
+
+        return allowedStrikeArea.OverlapPoint(targetPosition);
+    }
+
+    private IEnumerator StrikeAnimation()
+    {
+        isAnimating = true;
+
+        Vector3 strikePosition = transform.position;
+        Quaternion beforeStrikeRotation = transform.rotation;
+        Quaternion strikeRotation = Quaternion.Euler(0f, 0f, strikeAngle);
+
+        float timer = 0f;
+
+        while (timer < strikeTime)
+        {
+            timer += Time.deltaTime;
+            float t = timer / strikeTime;
+
+            transform.rotation = Quaternion.Lerp(beforeStrikeRotation, strikeRotation, t);
+
+            yield return null;
+        }
+
+        transform.rotation = strikeRotation;
+
         Strike(targetPosition);
 
-        
+        yield return new WaitForSeconds(pauseAfterStrike);
+
+        timer = 0f;
+
+        Vector3 currentPosition = transform.position;
+        Quaternion currentRotation = transform.rotation;
+
+        while (timer < returnTime)
+        {
+            timer += Time.deltaTime;
+            float t = timer / returnTime;
+
+            transform.position = Vector3.Lerp(currentPosition, startPosition, t);
+            transform.rotation = Quaternion.Lerp(currentRotation, startRotation, t);
+
+            yield return null;
+        }
+
+        transform.position = startPosition;
+        transform.rotation = startRotation;
+
+        if (spriteRenderer != null)
+        {
+            if (normalHammerSprite != null)
+                spriteRenderer.sprite = normalHammerSprite;
+
+            spriteRenderer.color = normalColor;
+        }
+
         if (hammerCollider != null)
             hammerCollider.enabled = true;
 
         if (rb != null)
         {
             rb.bodyType = RigidbodyType2D.Dynamic;
+            rb.linearVelocity = Vector2.zero;
+            rb.angularVelocity = 0f;
         }
 
-        Debug.Log("Dropped hammer");
+        isAnimating = false;
+
+        Debug.Log("Hammer returned to table");
+    }
+
+    private IEnumerator ReturnHammerWithoutStrike()
+    {
+        isAnimating = true;
+
+        float timer = 0f;
+
+        Vector3 currentPosition = transform.position;
+        Quaternion currentRotation = transform.rotation;
+
+        while (timer < returnTime)
+        {
+            timer += Time.deltaTime;
+            float t = timer / returnTime;
+
+            transform.position = Vector3.Lerp(currentPosition, startPosition, t);
+            transform.rotation = Quaternion.Lerp(currentRotation, startRotation, t);
+
+            yield return null;
+        }
+
+        transform.position = startPosition;
+        transform.rotation = startRotation;
+
+        if (spriteRenderer != null)
+        {
+            if (normalHammerSprite != null)
+                spriteRenderer.sprite = normalHammerSprite;
+
+            spriteRenderer.color = normalColor;
+        }
+
+        if (hammerCollider != null)
+            hammerCollider.enabled = true;
+
+        if (rb != null)
+        {
+            rb.bodyType = RigidbodyType2D.Dynamic;
+            rb.linearVelocity = Vector2.zero;
+            rb.angularVelocity = 0f;
+        }
+
+        isAnimating = false;
+
+        Debug.Log("Hammer returned without striking");
     }
 
     private void Strike(Vector3 position)
@@ -123,7 +314,7 @@ public class HammerDragWorld : MonoBehaviour
             Instantiate(crackPrefab, position, Quaternion.identity);
         }
 
-        
+        // Check if player was hit
         Collider2D playerHit = Physics2D.OverlapCircle(position, hitRadius, playerLayer);
 
         if (playerHit != null)
@@ -133,26 +324,26 @@ public class HammerDragWorld : MonoBehaviour
             return;
         }
 
-       
-        Collider2D breakableHit = Physics2D.OverlapCircle(position, hitRadius, breakableLayer);
+        // Check if hammer hit an interactable object like the falling rock
+        Collider2D hitObject = Physics2D.OverlapCircle(position, hitRadius, breakableLayer);
 
-        if (breakableHit != null)
+        if (hitObject != null)
         {
-            BreakableObject breakable = breakableHit.GetComponent<BreakableObject>();
+            canHammer hammerObject = hitObject.GetComponent<canHammer>();
 
-            if (breakable != null)
+            if (hammerObject != null && hammerObject.CanInteract())
             {
-                breakable.TakeHit();
+                hammerObject.Interact();
             }
         }
     }
 
     private void EndGame()
     {
-        
         Debug.Log("GAME OVER");
 
-       
+        // Later connect this to your real GameManager:
+        // GameManager.Instance.GameOver();
     }
 
     private Vector3 GetMouseWorldPosition()

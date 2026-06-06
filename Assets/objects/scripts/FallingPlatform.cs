@@ -1,55 +1,34 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class FallingPlatform : MonoBehaviour,canHammer
+public class FallingPlatform : MonoBehaviour, canHammer
 {
-    
-    public Rigidbody2D rb;
-    private bool qwerty= false; //no supe como nombrar este
-    public GameObject boss;
+    [SerializeField] private Rigidbody2D rb;
 
-    void Start()
+    private bool hasFallen = false;
+
+    private void Awake()
     {
-        rb = gameObject.GetComponent<Rigidbody2D>();
+        if (rb == null)
+            rb = GetComponent<Rigidbody2D>();
+
+        // Rock starts not falling
+        rb.bodyType = RigidbodyType2D.Static;
     }
+
     public void Interact()
     {
-        if(qwerty)
-        {
-            //boss.GetComponent<BossController>().hurt();
-            //que le baja la "vida" al jefe, luego miro como lo hago
-            return;
-        }
-        if(rb.bodyType == RigidbodyType2D.Dynamic)
-        {
-            rb.bodyType = RigidbodyType2D.Static;
-        }
-        else
-        {
-            rb.bodyType = RigidbodyType2D.Dynamic;
-        }
+        if (hasFallen) return;
+
+        hasFallen = true;
+
+        // This makes the rock fall
+        rb.bodyType = RigidbodyType2D.Dynamic;
+
+        Debug.Log("Rock started falling");
     }
 
-    void OnTriggerEnter2D(Collider2D collision)
+    public bool CanInteract()
     {
-        if(collision.CompareTag("Player"))
-        {
-            Debug.Log("Player kill");
-            //collision.gameObject.GetComponent<PlayerController>().KillPlayer(); //no se nombres de cosas asi que lo puse asi 
-        }
-        else if(collision.CompareTag("Button"))
-        {
-            Debug.Log("Button Press");
-            //collision.gameObject.GetComponent<ButtonController>().interact();
-        }
-        else if(collision.CompareTag("Boss"))
-        {
-            qwerty=true;
-        }
-    }
-
-    bool canHammer.CanInteract()
-    {
-        return true;
+        return !hasFallen;
     }
 }

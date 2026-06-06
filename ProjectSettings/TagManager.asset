@@ -12,9 +12,9 @@ TagManager:
   - groundLayer
   - Water
   - UI
-  - 
-  - 
-  - 
+  - walllayer
+  - breakable
+  - Player
   - 
   - 
   - 

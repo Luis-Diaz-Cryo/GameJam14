@@ -11,15 +11,28 @@ public class ButtonController : MonoBehaviour, insideScreen
     public void Interact()
     {
         if (activated) return;
-        
+
         activated = true;
 
+        // Move button down visually
         transform.position += new Vector3(0f, -0.5f, 0f);
 
+        // Activate connected object
         if (objectToActivate != null)
-            objectToActivate.GetComponent<canHammer>().Interact();
+        {
+            canHammer hammerObject = objectToActivate.GetComponent<canHammer>();
 
-        Debug.Log("presionado");
+            if (hammerObject != null)
+            {
+                hammerObject.Interact();
+            }
+            else
+            {
+                Debug.LogWarning(objectToActivate.name + " does not have a canHammer script.");
+            }
+        }
+
+        Debug.Log("Button pressed");
     }
 
     private void OnTriggerEnter2D(Collider2D other)
