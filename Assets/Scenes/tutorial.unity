@@ -130,7 +130,7 @@ GameObject:
   - component: {fileID: 3551347}
   - component: {fileID: 3551346}
   - component: {fileID: 3551345}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: fllor (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -429,7 +429,7 @@ GameObject:
   - component: {fileID: 23997761}
   - component: {fileID: 23997763}
   - component: {fileID: 23997762}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: fllor (26)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -658,7 +658,7 @@ GameObject:
   - component: {fileID: 176111082}
   - component: {fileID: 176111081}
   - component: {fileID: 176111080}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: fllor (11)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -796,7 +796,7 @@ GameObject:
   - component: {fileID: 310837628}
   - component: {fileID: 310837630}
   - component: {fileID: 310837629}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: fllor (21)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1025,7 +1025,7 @@ GameObject:
   - component: {fileID: 464627693}
   - component: {fileID: 464627695}
   - component: {fileID: 464627694}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: platform2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1301,7 +1301,7 @@ GameObject:
   - component: {fileID: 547058417}
   - component: {fileID: 547058416}
   - component: {fileID: 547058415}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: fllor (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1439,7 +1439,7 @@ GameObject:
   - component: {fileID: 589825107}
   - component: {fileID: 589825106}
   - component: {fileID: 589825108}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: fllor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1577,7 +1577,7 @@ GameObject:
   - component: {fileID: 605840991}
   - component: {fileID: 605840993}
   - component: {fileID: 605840992}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: fllor (18)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1800,7 +1800,7 @@ GameObject:
   - component: {fileID: 621272389}
   - component: {fileID: 621272388}
   - component: {fileID: 621272391}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: lava
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1960,7 +1960,7 @@ GameObject:
   - component: {fileID: 661724192}
   - component: {fileID: 661724194}
   - component: {fileID: 661724193}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: fllor (17)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2098,7 +2098,7 @@ GameObject:
   - component: {fileID: 696076193}
   - component: {fileID: 696076195}
   - component: {fileID: 696076194}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: fllor (22)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2236,7 +2236,7 @@ GameObject:
   - component: {fileID: 726169808}
   - component: {fileID: 726169810}
   - component: {fileID: 726169809}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: fllor (27)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2252,8 +2252,8 @@ Transform:
   m_GameObject: {fileID: 726169807}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.46761957, y: 0.06356, z: 0}
-  m_LocalScale: {x: 0.06718928, y: -0.05550539, z: 1}
+  m_LocalPosition: {x: 0.46761957, y: 0.05836, z: 0}
+  m_LocalScale: {x: 0.06718928, y: -0.045088287, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1632877699}
@@ -2374,7 +2374,7 @@ GameObject:
   - component: {fileID: 793847387}
   - component: {fileID: 793847389}
   - component: {fileID: 793847388}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: fllor (19)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2512,7 +2512,7 @@ GameObject:
   - component: {fileID: 866760999}
   - component: {fileID: 866761001}
   - component: {fileID: 866761000}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: fllor (28)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2650,7 +2650,7 @@ GameObject:
   - component: {fileID: 914321184}
   - component: {fileID: 914321186}
   - component: {fileID: 914321185}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: fllor (20)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2788,7 +2788,7 @@ GameObject:
   - component: {fileID: 986989998}
   - component: {fileID: 986990000}
   - component: {fileID: 986989999}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: fllor (25)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2924,7 +2924,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1042054527}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: terrain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3069,7 +3069,7 @@ GameObject:
   - component: {fileID: 1145665510}
   - component: {fileID: 1145665509}
   - component: {fileID: 1145665508}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: fllor (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3207,7 +3207,7 @@ GameObject:
   - component: {fileID: 1186272426}
   - component: {fileID: 1186272425}
   - component: {fileID: 1186272424}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: fllor (10)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3345,7 +3345,7 @@ GameObject:
   - component: {fileID: 1295878898}
   - component: {fileID: 1295878900}
   - component: {fileID: 1295878899}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: fllor (15)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3483,7 +3483,7 @@ GameObject:
   - component: {fileID: 1298616866}
   - component: {fileID: 1298616865}
   - component: {fileID: 1298616864}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: fllor (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3621,7 +3621,7 @@ GameObject:
   - component: {fileID: 1415548060}
   - component: {fileID: 1415548062}
   - component: {fileID: 1415548061}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: fllor (29)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3759,7 +3759,7 @@ GameObject:
   - component: {fileID: 1432230223}
   - component: {fileID: 1432230222}
   - component: {fileID: 1432230221}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: fllor (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3897,7 +3897,7 @@ GameObject:
   - component: {fileID: 1632877699}
   - component: {fileID: 1632877701}
   - component: {fileID: 1632877700}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: platform1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4041,7 +4041,7 @@ GameObject:
   - component: {fileID: 1668093589}
   - component: {fileID: 1668093588}
   - component: {fileID: 1668093587}
-  m_Layer: 8
+  m_Layer: 3
   m_Name: rocks1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4179,7 +4179,7 @@ GameObject:
   - component: {fileID: 1676771437}
   - component: {fileID: 1676771439}
   - component: {fileID: 1676771438}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: fllor (13)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4317,7 +4317,7 @@ GameObject:
   - component: {fileID: 1710853371}
   - component: {fileID: 1710853370}
   - component: {fileID: 1710853369}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: fllor (12)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4458,7 +4458,7 @@ GameObject:
   - component: {fileID: 1717589006}
   - component: {fileID: 1717589010}
   - component: {fileID: 1717589011}
-  m_Layer: 4
+  m_Layer: 0
   m_Name: Daniel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4630,7 +4630,7 @@ MonoBehaviour:
   lowJumpMultiplier: 2
   groundLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
 --- !u!95 &1717589011
 Animator:
   serializedVersion: 7
@@ -4664,7 +4664,7 @@ GameObject:
   - component: {fileID: 1753457779}
   - component: {fileID: 1753457781}
   - component: {fileID: 1753457780}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: fllor (24)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4802,7 +4802,7 @@ GameObject:
   - component: {fileID: 1996085966}
   - component: {fileID: 1996085968}
   - component: {fileID: 1996085967}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: fllor (14)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
