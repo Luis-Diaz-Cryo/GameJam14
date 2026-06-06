@@ -30,6 +30,7 @@ public class Movement : MonoBehaviour
         float horizontalInput = Input.GetAxis("Horizontal");
 
         body.linearVelocity = new Vector2(horizontalInput * speed, body.linearVelocity.y);
+        anim.SetBool("Run", horizontalInput != 0);
 
         if (horizontalInput > 0.01f && !facingRight)
         {
@@ -53,7 +54,7 @@ public class Movement : MonoBehaviour
     private void Jump()
     {
         body.linearVelocity = new Vector2(body.linearVelocity.x, jumpPower);
-        anim.SetTrigger("jump");
+        anim.SetTrigger("Jump");
     }
 
     private void BetterJump()
