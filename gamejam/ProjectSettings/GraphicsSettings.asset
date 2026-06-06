@@ -57,6 +57,7 @@ GraphicsSettings:
   m_FogKeepExp: 1
   m_FogKeepExp2: 1
   m_AlbedoSwatchInfos: []
+<<<<<<< HEAD
   m_RenderPipelineGlobalSettingsMap: {}
   m_ShaderBuildSettings:
     keywordDeclarationOverrides: []
@@ -64,5 +65,15 @@ GraphicsSettings:
   m_LightsUseColorTemperature: 0
   m_LogWhenShaderIsCompiled: 0
   m_LightProbeOutsideHullStrategy: 1
+=======
+  m_RenderPipelineGlobalSettingsMap:
+    UnityEngine.Rendering.Universal.UniversalRenderPipeline: {fileID: 11400000, guid: 93b439a37f63240aca3dd4e01d978a9f, type: 2}
+  m_ShaderBuildSettings:
+    keywordDeclarationOverrides: []
+  m_LightsUseLinearIntensity: 1
+  m_LightsUseColorTemperature: 1
+  m_LogWhenShaderIsCompiled: 0
+  m_LightProbeOutsideHullStrategy: 0
+>>>>>>> 7245297167a7f89cb60e67147a21868d44515272
   m_CameraRelativeLightCulling: 0
   m_CameraRelativeShadowCulling: 0

@@ -9,10 +9,13 @@ onBoardingDoNotAskAgain = true
 showPackageIndexes = false
 showStatusBar = false
 scopes = {
+<<<<<<< HEAD
 	"picker_window_position_offset.00000000" = "133;402;320;550"
 	"picker_visibility_flags.00000000" = "0"
 	"picker_item_size.00000000" = "1"
 	"picker_inspector.00000000" = "0"
+=======
+>>>>>>> 7245297167a7f89cb60e67147a21868d44515272
 }
 providers = {
 	asset = {
