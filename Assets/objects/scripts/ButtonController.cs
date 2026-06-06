@@ -37,6 +37,8 @@ public class ButtonController : MonoBehaviour, insideScreen
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        Debug.Log("presionado");
+
         if (activated) return;
 
         if (other.CompareTag(stoneTag))
