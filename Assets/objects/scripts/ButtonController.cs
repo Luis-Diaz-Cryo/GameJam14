@@ -5,8 +5,15 @@ public class ButtonController : MonoBehaviour, insideScreen
     [Header("Config")]
     [SerializeField] private string stoneTag = "presser";
     [SerializeField] private GameObject objectToActivate;
+    [SerializeField] private Sprite pressedbutton;
 
+    private SpriteRenderer spriteRenderer;
     private bool activated = false;
+
+    private void Awake()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
 
     public void Interact()
     {
@@ -14,7 +21,13 @@ public class ButtonController : MonoBehaviour, insideScreen
 
         activated = true;
 
-        // Move button down visually
+        // Change button sprite
+        if (pressedbutton != null && spriteRenderer != null)
+        {
+            spriteRenderer.sprite = pressedbutton;
+        }
+
+        // Optional: move button down visually
         transform.position += new Vector3(0f, -0.5f, 0f);
 
         // Activate connected object
@@ -37,8 +50,6 @@ public class ButtonController : MonoBehaviour, insideScreen
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("presionado");
-
         if (activated) return;
 
         if (other.CompareTag(stoneTag))
