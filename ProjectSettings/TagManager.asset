@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - presser
+  - Boss
   layers:
   - Default
   - TransparentFX
@@ -12,8 +13,8 @@ TagManager:
   - groundLayer
   - Water
   - UI
-  - 
-  - 
+  - breakable
+  - player
   - 
   - 
   - 

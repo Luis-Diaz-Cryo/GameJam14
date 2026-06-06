@@ -1,13 +1,14 @@
+using Unity.Collections;
 using UnityEngine;
 
-public class FallingDebree : MonoBehaviour,canHammer
+public class KillingThing : MonoBehaviour,canHammer
 {
       
     public Rigidbody2D rb;
 
     bool canHammer.CanInteract()
     {
-        throw new System.NotImplementedException();
+        return false;
     }
 
     void Start()
@@ -26,5 +27,12 @@ public class FallingDebree : MonoBehaviour,canHammer
             Debug.Log("Player kill");
             //collision.gameObject.GetComponent<PlayerController>().KillPlayer(); //no se nombres de cosas asi que lo puse asi 
         }
+        if(collision.CompareTag("presser"))
+        {
+            //Debug.Log("plataforma devuelta");
+            Vector3 x = collision.gameObject.transform.position;
+            collision.gameObject.transform.position = new Vector3(x.x,17f,0f);
+        }
+        
     }
 }
