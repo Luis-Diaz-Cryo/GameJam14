@@ -7,7 +7,14 @@ public class HealthController : MonoBehaviour
     [SerializeField] private bool aliveCheck = true;
     [SerializeField] private GameObject deathScreen;
 
+    [Header("SFX")]
+    [SerializeField] private AudioClip deathSound;
+    [SerializeField] private AudioClip lavaSound;
+    [SerializeField] private AudioSource deathSoundSource;
+
     private bool wasBurned = false;
+    private bool playedSound = false;
+    private bool lavaSoundPlayed = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -23,6 +30,11 @@ public class HealthController : MonoBehaviour
     {
         if (!aliveCheck)
         {
+            if (!playedSound)
+            {
+                deathSoundSource.PlayOneShot(deathSound);
+                playedSound = true;
+            }
             if (gameObject.GetComponent<Movement>() != null)
             {
                 if (deathScreen != null)
@@ -37,6 +49,11 @@ public class HealthController : MonoBehaviour
             if (wasBurned)
             {
                 gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 0.5f, 0.5f); // Change color to indicate burning
+                if (!lavaSoundPlayed)
+                {
+                    deathSoundSource.PlayOneShot(lavaSound);
+                    lavaSoundPlayed = true;
+                }
             }
 
         }

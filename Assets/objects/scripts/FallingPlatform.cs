@@ -3,8 +3,12 @@ using UnityEngine;
 
 public class FallingPlatform : MonoBehaviour, canHammer
 {
+    [Header("Config")]
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private float timeBeforeStatic = 1.5f;
+
+    [Header("SFX")]
+    [SerializeField] private AudioSource breakSound;
 
     private bool hasFallen = false;
     private Animator anim;
@@ -46,6 +50,7 @@ public class FallingPlatform : MonoBehaviour, canHammer
 
         // Make rock fall
         rb.bodyType = RigidbodyType2D.Dynamic;
+        breakSound.Play();
 
         // After delay, freeze it again
         StartCoroutine(BecomeStaticAfterDelay());

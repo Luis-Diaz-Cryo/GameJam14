@@ -7,6 +7,12 @@ public class MenuController : MonoBehaviour
         SceneManager.LoadScene("tutorial");
     }
 
+    public void OnCreditsClick()
+    {
+        GameObject credits = transform.GetChild(4).gameObject;
+        credits.SetActive(true);
+    }
+
     public void OnEndClick()
     {
 #if UNITY_EDITOR
@@ -14,5 +20,10 @@ public class MenuController : MonoBehaviour
 #endif
         Application.Quit();
         
+    }
+    public void OnBackClick()
+    {
+        GameObject credits = transform.GetChild(4).gameObject;
+        credits.SetActive(false);
     }
 }

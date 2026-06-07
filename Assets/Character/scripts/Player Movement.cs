@@ -13,6 +13,9 @@ public class Movement : MonoBehaviour
     [Header("Ground Check")]
     [SerializeField] private LayerMask groundLayer;
 
+    [Header("SFX")]
+    [SerializeField] private AudioSource jumpSound;
+
     private Rigidbody2D body;
     private BoxCollider2D boxCollider;
     private Animator anim;
@@ -55,6 +58,7 @@ public class Movement : MonoBehaviour
     {
         body.linearVelocity = new Vector2(body.linearVelocity.x, jumpPower);
         anim.SetTrigger("Jump");
+        jumpSound.Play();
     }
 
     private void BetterJump()
