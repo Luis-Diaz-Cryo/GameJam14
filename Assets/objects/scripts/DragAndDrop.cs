@@ -23,6 +23,7 @@ public class HammerDragWorld : MonoBehaviour
     [SerializeField] private LayerMask playerLayer;
     [SerializeField] private float hitRadius = 0.5f;
     [SerializeField] private float hitsMade = 0f;
+    [SerializeField] private float hitsMax = 4f;
 
     [Header("Allowed Strike Area")]
     [SerializeField] private Collider2D allowedStrikeArea;
@@ -312,7 +313,7 @@ public class HammerDragWorld : MonoBehaviour
 
         hitsMade += 1f;
 
-        if (hitsMade >= 4f)
+        if (hitsMade >= hitsMax)
         {
             Debug.Log("Hammer has been used 3 times. Ending game.");
             EndGame();
@@ -363,7 +364,7 @@ public class HammerDragWorld : MonoBehaviour
     {
         Debug.Log("GAME OVER");
         GameObject player;
-        if (hitsMade < 4f)
+        if (hitsMade < hitsMax)
         {
             player = GameObject.FindGameObjectWithTag("Player");
             Debug.Log("Player found: " + (player != null));
