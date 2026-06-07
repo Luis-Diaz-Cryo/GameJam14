@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using TMPro;
 
 public class HammerDragWorld : MonoBehaviour
 {
@@ -22,8 +23,9 @@ public class HammerDragWorld : MonoBehaviour
     [SerializeField] private LayerMask breakableLayer;
     [SerializeField] private LayerMask playerLayer;
     [SerializeField] private float hitRadius = 0.5f;
-    [SerializeField] private float hitsMade = 0f;
-    [SerializeField] private float hitsMax = 4f;
+    [SerializeField] private int hitsMade = 0;
+    [SerializeField] private int hitsMax = 4;
+    public TextMeshProUGUI healthText;
 
     [Header("Allowed Strike Area")]
     [SerializeField] private Collider2D allowedStrikeArea;
@@ -33,6 +35,21 @@ public class HammerDragWorld : MonoBehaviour
     [SerializeField] private float strikeTime = 0.15f;
     [SerializeField] private float returnTime = 0.25f;
     [SerializeField] private float pauseAfterStrike = 0.15f;
+
+    [Header("Hammer Hint")]
+    [SerializeField] private float hintDelay = 10f;
+    [SerializeField] private float hintPulseSpeed = 4f;
+    [SerializeField] private float hintMaxBrightness = 2f;
+    [SerializeField] private ParticleSystem sparkleEffect;
+    [SerializeField] private AudioSource hintAudio;
+    [SerializeField] private float maxHintVolume = 1f;
+    [SerializeField] private float volumeIncreaseSpeed = 0.15f;
+    [SerializeField] private GameObject mouseHint;
+
+    private bool hasPickedUpHammer = false;
+    private bool hintActive = false;
+    private float hintTimer = 0f;
+    private float currentHintVolume = 0f;
 
     private Camera mainCamera;
     private SpriteRenderer spriteRenderer;
@@ -67,10 +84,31 @@ public class HammerDragWorld : MonoBehaviour
 
         if (targetSprite != null)
             targetSprite.SetActive(false);
+
+        AutoFindUIIfMissing();
+        UpdateHealth(hitsMax - hitsMade);
+        if (sparkleEffect != null)
+        {
+            sparkleEffect.Stop();
+        }
+
+        if (hintAudio != null)
+        {
+            hintAudio.loop = true;
+            hintAudio.volume = 0f;
+            hintAudio.Stop();
+        }
+        if (mouseHint != null)
+        {
+            mouseHint.SetActive(false);
+        }
     }
+
 
     private void Update()
     {
+        HandleHammerHint();
+
         if (isAnimating)
             return;
 
@@ -94,7 +132,7 @@ public class HammerDragWorld : MonoBehaviour
 
     private void CheckHover()
     {
-        if (isDragging)
+        if (isDragging || hintActive)
             return;
 
         Vector3 mouseWorldPos = GetMouseWorldPosition();
@@ -118,6 +156,30 @@ public class HammerDragWorld : MonoBehaviour
         }
     }
 
+    private void AutoFindUIIfMissing()
+    {
+        if (healthText == null)
+        {
+            GameObject healthObj = GameObject.Find("healthText");
+            if (healthObj != null)
+            {
+                healthText = healthObj.GetComponent<TextMeshProUGUI>();
+            }
+        }
+    }
+
+    private void UpdateHealth(int strikesLeft)
+    {
+        if (healthText == null)
+        {
+            Debug.LogWarning("Health text missing. Drag text into box.");
+            return;
+        }
+        strikesLeft--;
+
+        healthText.text = "" + strikesLeft;
+    }
+
     private void TryPickUpHammer()
     {
         Vector3 mouseWorldPos = GetMouseWorldPosition();
@@ -125,6 +187,9 @@ public class HammerDragWorld : MonoBehaviour
 
         if (hit != null && hit.gameObject == gameObject)
         {
+
+            hasPickedUpHammer = true;
+            StopHammerHint();
             isDragging = true;
             isHovering = false;
 
@@ -311,14 +376,19 @@ public class HammerDragWorld : MonoBehaviour
     {
         Debug.Log("Hammer hit at: " + position);
 
-        hitsMade += 1f;
+        hitsMade++;
+
+        int strikesLeft = hitsMax - hitsMade;
+        UpdateHealth(strikesLeft);
 
         if (hitsMade >= hitsMax)
         {
-            Debug.Log("Hammer has been used 3 times. Ending game.");
+            Debug.Log("Hammer has no strikes left. Ending game.");
             EndGame();
             return;
         }
+
+
 
         if (crackPrefab != null)
         {
@@ -404,5 +474,102 @@ public class HammerDragWorld : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(targetPosition, hitRadius);
+    }
+    private void HandleHammerHint()
+    {
+        if (hasPickedUpHammer)
+            return;
+
+        if (isDragging || isAnimating)
+            return;
+
+        hintTimer += Time.deltaTime;
+
+        if (hintTimer >= hintDelay && !hintActive)
+        {
+            StartHammerHint();
+        }
+
+        if (hintActive)
+        {
+            PulseHammerBrightness();
+            IncreaseHintVolume();
+        }
+    }
+
+    private void StartHammerHint()
+    {
+        hintActive = true;
+
+        if (sparkleEffect != null)
+        {
+            sparkleEffect.Play();
+        }
+
+        if (hintAudio != null)
+        {
+            hintAudio.volume = 0f;
+            hintAudio.Play();
+        }
+
+        if (mouseHint != null)
+        {
+            mouseHint.SetActive(true);
+        }
+
+        Debug.Log("Hammer hint started");
+    }
+
+    private void StopHammerHint()
+    {
+        hintActive = false;
+
+        if (sparkleEffect != null)
+        {
+            sparkleEffect.Stop();
+        }
+
+        if (hintAudio != null)
+        {
+            hintAudio.Stop();
+            hintAudio.volume = 0f;
+        }
+
+        currentHintVolume = 0f;
+
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.color = normalColor;
+        }
+        if (mouseHint != null)
+        {
+            mouseHint.SetActive(false);
+        }
+
+        Debug.Log("Hammer hint stopped");
+    }
+
+    private void PulseHammerBrightness()
+    {
+        if (spriteRenderer == null)
+            return;
+
+        float pulse = (Mathf.Sin(Time.time * hintPulseSpeed) + 1f) / 2f;
+
+        Color brightColor = normalColor * hintMaxBrightness;
+        brightColor.a = normalColor.a;
+
+        spriteRenderer.color = Color.Lerp(normalColor, brightColor, pulse);
+    }
+
+    private void IncreaseHintVolume()
+    {
+        if (hintAudio == null)
+            return;
+
+        currentHintVolume += Time.deltaTime * volumeIncreaseSpeed;
+        currentHintVolume = Mathf.Clamp(currentHintVolume, 0f, maxHintVolume);
+
+        hintAudio.volume = currentHintVolume;
     }
 }
