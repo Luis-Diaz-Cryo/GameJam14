@@ -22,6 +22,7 @@ public class HammerDragWorld : MonoBehaviour
     [SerializeField] private LayerMask breakableLayer;
     [SerializeField] private LayerMask playerLayer;
     [SerializeField] private float hitRadius = 0.5f;
+    [SerializeField] private float hitsMade = 0f;
 
     [Header("Allowed Strike Area")]
     [SerializeField] private Collider2D allowedStrikeArea;
@@ -309,6 +310,15 @@ public class HammerDragWorld : MonoBehaviour
     {
         Debug.Log("Hammer hit at: " + position);
 
+        hitsMade += 1f;
+
+        if (hitsMade >= 4f)
+        {
+            Debug.Log("Hammer has been used 3 times. Ending game.");
+            EndGame();
+            return;
+        }
+
         if (crackPrefab != null)
         {
             Instantiate(crackPrefab, position, Quaternion.identity);
@@ -346,7 +356,28 @@ public class HammerDragWorld : MonoBehaviour
     private void EndGame()
     {
         Debug.Log("GAME OVER");
-
+        GameObject player;
+        if (hitsMade < 4f)
+        {
+            player = GameObject.FindGameObjectWithTag("Player");
+            Debug.Log("Player found: " + (player != null));
+        }
+        else
+        {
+            GameObject parentObj = GameObject.Find("UI");
+            Transform gameOverScreen = parentObj.transform.Find("mainGameOver");
+            player = gameOverScreen != null ? gameOverScreen.gameObject : null;
+            Debug.Log("Game Over object found: " + (player != null));
+        }
+        if (player != null)
+        {
+            if (!player.activeSelf)
+            {
+                player.SetActive(true);
+            }
+            HealthController health = player.GetComponent<HealthController>();
+            health.SetAlive(false);
+        }
         // Later connect this to your real GameManager:
         // GameManager.Instance.GameOver();
     }

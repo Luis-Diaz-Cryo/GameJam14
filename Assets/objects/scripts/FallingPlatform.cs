@@ -68,4 +68,14 @@ public class FallingPlatform : MonoBehaviour, canHammer
     {
         return !hasFallen;
     }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player") && rb.bodyType == RigidbodyType2D.Dynamic)
+        {
+            Debug.Log("Player hit by falling rock!");
+            other.gameObject.GetComponent<HealthController>().SetAlive(false);
+            // Optional: Add damage or knockback to player here
+        }
+    }
 }

@@ -1,4 +1,5 @@
 using System.Collections;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class ExplosionController : MonoBehaviour, canHammer
@@ -33,6 +34,9 @@ public class ExplosionController : MonoBehaviour, canHammer
     public void Interact()
     {
         Debug.Log("Explosion triggered!");
+
+        GameObject crack = FindInactiveByName("crackedglass");
+        crack.SetActive(true);
 
         if (anim != null)
         {
@@ -82,4 +86,25 @@ public class ExplosionController : MonoBehaviour, canHammer
             Debug.LogWarning(objectToActivate.name + " does not have a Rigidbody2D.");
         }
     }
+
+    public GameObject FindInactiveByName(string targetName)
+{
+    // Get all root objects in the currently active scene (includes inactive ones)
+    GameObject[] rootObjects = SceneManager.GetActiveScene().GetRootGameObjects();
+    
+    foreach (GameObject root in rootObjects)
+    {
+        // Check all children recursively, passing 'true' to include inactive components
+        Transform[] allTransforms = root.GetComponentsInChildren<Transform>(true);
+        
+        foreach (Transform t in allTransforms)
+        {
+            if (t.name == targetName)
+            {
+                return t.gameObject;
+            }
+        }
+    }
+    return null; // Object not found
+}
 }
