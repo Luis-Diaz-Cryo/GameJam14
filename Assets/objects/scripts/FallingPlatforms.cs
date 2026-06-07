@@ -3,29 +3,45 @@ using UnityEngine;
 public class FallingPlatforms : MonoBehaviour, canHammer
 {
     [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private float maxFallSpeed = -5f;
+
+    private bool frozen = false;
 
     private void Awake()
     {
         if (rb == null)
             rb = GetComponent<Rigidbody2D>();
     }
-    void Update()
+
+    private void FixedUpdate()
     {
-        if(rb.linearVelocityY<-5) rb.linearVelocityY=-5;
+        if (rb == null || frozen) return;
+
+        // Limit falling speed
+        if (rb.linearVelocity.y < maxFallSpeed)
+        {
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, maxFallSpeed);
+        }
     }
+
     public void Interact()
     {
-        if(rb.bodyType == RigidbodyType2D.Dynamic)
-        {
-        rb.bodyType = RigidbodyType2D.Static;
-        }
-        else
-        rb.bodyType = RigidbodyType2D.Dynamic;
+        if (frozen) return;
 
+        frozen = true;
+
+        // Stop all movement
+        rb.linearVelocity = Vector2.zero;
+        rb.angularVelocity = 0f;
+
+        // Freeze in place
+        rb.bodyType = RigidbodyType2D.Static;
+
+        Debug.Log(gameObject.name + " frozen by hammer");
     }
 
     public bool CanInteract()
     {
-        return true;
+        return !frozen;
     }
 }

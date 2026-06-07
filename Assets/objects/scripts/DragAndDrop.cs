@@ -339,16 +339,22 @@ public class HammerDragWorld : MonoBehaviour
 
         if (hitObject != null)
         {
-            Debug.Log("object hit");
-            canHammer hammerObject = hitObject.GetComponent<canHammer>();
+            Debug.Log("object hit: " + hitObject.name);
 
-            if (hammerObject != null && hammerObject.CanInteract())
+            BreakableObject breakable = hitObject.GetComponent<BreakableObject>();
+
+            if (breakable != null)
             {
-                hammerObject.Interact();
+                breakable.TakeHit();
             }
-            if(hitObject.GetComponent<BreakableObject>()!=null)
+            else
             {
-                hitObject.GetComponent<BreakableObject>().TakeHit();
+                canHammer hammerObject = hitObject.GetComponent<canHammer>();
+
+                if (hammerObject != null && hammerObject.CanInteract())
+                {
+                    hammerObject.Interact();
+                }
             }
         }
     }

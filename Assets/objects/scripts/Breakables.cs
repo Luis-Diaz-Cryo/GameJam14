@@ -4,30 +4,29 @@ public class BreakableObject : MonoBehaviour
 {
     [SerializeField] private int health = 1;
     [SerializeField] private GameObject brokenVersion;
-    private canHammer canHammer;
 
-    void Start()
+    private canHammer hammerInteractable;
+
+    private void Awake()
     {
-        if(gameObject.GetComponent<canHammer>() != null)
-            canHammer = gameObject.GetComponent<canHammer>();
+        hammerInteractable = GetComponent<canHammer>();
     }
 
     public void TakeHit()
     {
         health--;
 
-        Debug.Log(gameObject.name + " was hit");
+        Debug.Log(gameObject.name + " was hit. Health: " + health);
 
-        
         if (health <= 0)
         {
+            if (hammerInteractable != null && hammerInteractable.CanInteract())
+            {
+                hammerInteractable.Interact();
+            }
+
             Break();
         }
-        if(canHammer!=null && canHammer.CanInteract())
-        {
-            canHammer.Interact();
-        }
-
     }
 
     private void Break()
