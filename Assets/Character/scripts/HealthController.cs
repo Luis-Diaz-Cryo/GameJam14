@@ -51,6 +51,10 @@ public class HealthController : MonoBehaviour
         }
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
+     public void OnEndClick()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
 
     public void SetAlive(bool status)
     {

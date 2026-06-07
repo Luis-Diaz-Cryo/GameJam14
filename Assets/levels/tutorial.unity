@@ -377,6 +377,7 @@ MonoBehaviour:
     m_Bits: 256
   hitRadius: 0.5
   hitsMade: 0
+  hitsMax: 4
   allowedStrikeArea: {fileID: 1706127607}
   strikeAngle: 56
   strikeTime: 0.15
@@ -1382,8 +1383,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1092, y: -596}
-  m_SizeDelta: {x: 1092, y: 596}
+  m_AnchoredPosition: {x: 1102, y: -596}
+  m_SizeDelta: {x: 1102, y: 596}
   m_Pivot: {x: 1, y: 0}
 --- !u!1 &519420028
 GameObject:
@@ -4815,29 +4816,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1863438865228516215, guid: ad305f66eacd09d429423f1c5a3e3fdd, type: 3}
-      propertyPath: m_fontSize
-      value: 72.65
-      objectReference: {fileID: 0}
-    - target: {fileID: 4297804675626755805, guid: ad305f66eacd09d429423f1c5a3e3fdd, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0.00024414062
-      objectReference: {fileID: 0}
-    - target: {fileID: 8033773753143322015, guid: ad305f66eacd09d429423f1c5a3e3fdd, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 2.7000122
-      objectReference: {fileID: 0}
     - target: {fileID: 8238293019846069592, guid: ad305f66eacd09d429423f1c5a3e3fdd, type: 3}
       propertyPath: m_Name
       value: mainGameOver
-      objectReference: {fileID: 0}
-    - target: {fileID: 8238293019846069592, guid: ad305f66eacd09d429423f1c5a3e3fdd, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8919218521049900295, guid: ad305f66eacd09d429423f1c5a3e3fdd, type: 3}
-      propertyPath: m_fontSize
-      value: 36.9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6581,29 +6562,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1863438865228516215, guid: ad305f66eacd09d429423f1c5a3e3fdd, type: 3}
-      propertyPath: m_fontSize
-      value: 56.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3440882893019034330, guid: ad305f66eacd09d429423f1c5a3e3fdd, type: 3}
-      propertyPath: m_AdditionalShaderChannelsFlag
-      value: 25
-      objectReference: {fileID: 0}
     - target: {fileID: 8238293019846069592, guid: ad305f66eacd09d429423f1c5a3e3fdd, type: 3}
       propertyPath: m_Name
       value: inGameOver
-      objectReference: {fileID: 0}
-    - target: {fileID: 8238293019846069592, guid: ad305f66eacd09d429423f1c5a3e3fdd, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8325624616372064126, guid: ad305f66eacd09d429423f1c5a3e3fdd, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8919218521049900295, guid: ad305f66eacd09d429423f1c5a3e3fdd, type: 3}
-      propertyPath: m_fontSize
-      value: 20.4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
