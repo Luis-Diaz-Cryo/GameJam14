@@ -5,24 +5,56 @@ public class MovingPlatform : MonoBehaviour, canHammer
     [Header("Movement")]
     [SerializeField] private float moveDistance = 3f;
     [SerializeField] private float moveSpeed = 2f;
+    [SerializeField] private Rigidbody2D rb;
 
-    private Vector3 startPosition;
-    private Vector3 topPosition;
+    private Vector2 startPosition;
+    private Vector2 topPosition;
     private bool isActivated = false;
+
+    private void Awake()
+    {
+        if (rb == null)
+            rb = GetComponent<Rigidbody2D>();
+
+        if (rb != null)
+        {
+            rb.bodyType = RigidbodyType2D.Kinematic;
+            rb.gravityScale = 0f;
+            rb.freezeRotation = true;
+        }
+    }
 
     private void Start()
     {
-        startPosition = transform.position;
-        topPosition = startPosition + Vector3.up * moveDistance;
+        startPosition = rb.position;
+        topPosition = startPosition + Vector2.up * moveDistance;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (!isActivated) return;
 
-        float movement = Mathf.PingPong(Time.time * moveSpeed, 1f);
+        float movement = Mathf.PingPong(Time.fixedTime * moveSpeed, 1f);
 
-        transform.position = Vector3.Lerp(startPosition, topPosition, movement);
+        Vector2 newPosition = Vector2.Lerp(startPosition, topPosition, movement);
+
+        rb.MovePosition(newPosition);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            collision.transform.parent = transform;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            collision.transform.parent = null;
+        }
     }
 
     public void Interact()
