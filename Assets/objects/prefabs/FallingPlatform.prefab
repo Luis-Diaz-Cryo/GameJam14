@@ -10,10 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 327331782643150165}
   - component: {fileID: 600802887899583016}
-  - component: {fileID: 5387867865052841998}
-  - component: {fileID: 5368918579498854826}
   - component: {fileID: 8200819289821132926}
   - component: {fileID: 7454810726446264550}
+  - component: {fileID: -6524745939296736870}
   m_Layer: 6
   m_Name: FallingPlatform
   m_TagString: presser
@@ -83,34 +82,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 3.34, y: 1.52}
   m_EdgeRadius: 0
---- !u!114 &5387867865052841998
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2504514870078441310}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 000a1388cb854454eb6dfc56b39404e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BreakableObject
-  health: 3
-  brokenVersion: {fileID: 0}
---- !u!114 &5368918579498854826
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2504514870078441310}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96ff9a56eee9a784394a3233900cc551, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FallingPlatform
-  rb: {fileID: 0}
-  boss: {fileID: 0}
 --- !u!50 &8200819289821132926
 Rigidbody2D:
   serializedVersion: 5
@@ -184,6 +155,19 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 3.71, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &-6524745939296736870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2504514870078441310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d4c3c525b861814bac0000f8a9c892c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FallingPlatforms
+  rb: {fileID: 0}
 --- !u!1 &5301805234802441409
 GameObject:
   m_ObjectHideFlags: 0

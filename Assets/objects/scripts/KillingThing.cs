@@ -31,7 +31,7 @@ public class KillingThing : MonoBehaviour,canHammer
         {
             //Debug.Log("plataforma devuelta");
             Vector3 x = collision.gameObject.transform.position;
-            collision.gameObject.transform.position = new Vector3(x.x,17f,0f);
+            collision.gameObject.transform.position = new Vector3(x.x,13f,0f);
         }
         
     }

@@ -23,7 +23,6 @@ public class BreakableObject : MonoBehaviour
         {
             Break();
         }
-
         if(canHammer!=null && canHammer.CanInteract())
         {
             canHammer.Interact();
