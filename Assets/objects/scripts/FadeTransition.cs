@@ -6,8 +6,13 @@ public class FadeTransition : MonoBehaviour
 {
     public static FadeTransition Instance;
 
+    [Header("Fade Settings")]
     [SerializeField] private CanvasGroup fadeCanvasGroup;
     [SerializeField] private float fadeDuration = 1f;
+
+    [Header("SFX")]
+    [SerializeField] private AudioClip fadeSound;
+    [SerializeField] private AudioSource fadeSoundSource;
 
     private bool isFading = false;
 
@@ -39,6 +44,8 @@ public class FadeTransition : MonoBehaviour
     private IEnumerator FadeOutAndLoadScene(string sceneName)
     {
         isFading = true;
+
+        fadeSoundSource.PlayOneShot(fadeSound);
 
         yield return StartCoroutine(FadeOut());
 

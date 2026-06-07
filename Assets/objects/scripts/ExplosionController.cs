@@ -19,6 +19,9 @@ public class ExplosionController : MonoBehaviour, canHammer
     [SerializeField] private Vector2 otherNewColliderSize = new Vector2(1f, 1f);
     [SerializeField] private Vector2 otherNewColliderOffset = Vector2.zero;
 
+    [Header("SFX")]
+    [SerializeField] private AudioSource explosionSound;
+
     private Animator anim;
 
     private void Awake()
@@ -35,6 +38,7 @@ public class ExplosionController : MonoBehaviour, canHammer
     {
         Debug.Log("Explosion triggered!");
 
+        explosionSound.Play();
         GameObject crack = FindInactiveByName("crackedglass");
         crack.SetActive(true);
 

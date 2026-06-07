@@ -11,6 +11,10 @@ public class HammerScenePortal : MonoBehaviour, canHammer
     [Header("Scene Settings")]
     [SerializeField] private string sceneToLoad;
 
+    [Header("SFX")]
+    [SerializeField] private AudioClip hammerSound;
+    [SerializeField] private AudioSource hammerSource;
+
     private SpriteRenderer spriteRenderer;
     private bool activated = false;
 
@@ -41,7 +45,8 @@ public class HammerScenePortal : MonoBehaviour, canHammer
         {
             spriteRenderer.sprite = activatedSprite;
         }
-
+    
+        hammerSource.PlayOneShot(hammerSound);
         Debug.Log("Portal activated by hammer");
     }
 
